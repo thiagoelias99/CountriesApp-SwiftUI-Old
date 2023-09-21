@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct LoginView: View {
     @State private var mostrarSenha = false
@@ -17,7 +18,7 @@ struct LoginView: View {
     
     private var mainColorDark: UInt32 = 0x463E30
     private var mainColorLight: UInt32 = 0x6B5E4B
-    
+       
     
     var body: some View {
         VStack(alignment: .center){
@@ -93,7 +94,9 @@ struct LoginView: View {
                             .tint(Color(hex: mainColorDark))
                             .frame(width: 50)
                     }
-                    Button(action: {}){
+                    Button(action: {
+                        login()
+                    }){
                         Text("Entrar")
                             .font(.body)
                             .foregroundColor(.white)
@@ -162,6 +165,18 @@ struct LoginView: View {
               .fullScreenCover(isPresented: $showSignUpScreen){
                   SignUpView()
               }
+    }
+    
+    func login(){
+        Auth.auth().signIn(withEmail: "thiago@email.com", password: "123456"){
+            authResult, error in
+            guard let user = Auth.auth().currentUser else {return}
+            
+            
+            
+            print("Usuário Logado")
+            print(user.email)
+        }
     }
 }
 

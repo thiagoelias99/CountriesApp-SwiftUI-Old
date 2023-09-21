@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct SignUpView: View {
     @State private var mostrarSenha = false
@@ -19,6 +20,8 @@ struct SignUpView: View {
     
     private var mainColorDark: UInt32 = 0x463E30
     private var mainColorLight: UInt32 = 0x6B5E4B
+    
+//    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some View {
         GeometryReader{ geometry in
@@ -83,7 +86,9 @@ struct SignUpView: View {
                                 .autocapitalization(.none)
                         }
                         
-                        Button(action: {}){
+                        Button(action: {
+                            signUp()
+                        }){
                             Text("Criar conta")
                                 .font(.body)
                                 .foregroundColor(.white)
@@ -140,7 +145,17 @@ struct SignUpView: View {
             }
         }
     }
+    
+    func signUp(){
+        Auth.auth().createUser(withEmail: "thiago@email.com", password: "123456"){ authResult, error in
+            print(authResult?.description)
+        }
+    }
 }
+
+
+
+
 
 
 struct SignUpView_Previews: PreviewProvider {
