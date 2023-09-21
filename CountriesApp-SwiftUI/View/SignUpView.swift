@@ -15,13 +15,16 @@ struct SignUpView: View {
     @State private var emailInput = ""
     @State private var passwordInput = ""
     @State private var passwordConfirmInput = ""
+    @State private var showAlert = false
     
     @State private var showLoginScreen = false
     
     private var mainColorDark: UInt32 = 0x463E30
     private var mainColorLight: UInt32 = 0x6B5E4B
     
-//    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @State private var alertMessage = ""
+    
+    //    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some View {
         GeometryReader{ geometry in
@@ -87,7 +90,12 @@ struct SignUpView: View {
                         }
                         
                         Button(action: {
-                            signUp()
+                            signUp(
+                                userName: nameInput,
+                                email: emailInput,
+                                password: passwordInput,
+                                passwordCheck: passwordConfirmInput
+                            )
                         }){
                             Text("Criar conta")
                                 .font(.body)
@@ -143,14 +151,38 @@ struct SignUpView: View {
             .fullScreenCover(isPresented: $showLoginScreen){
                 LoginView()
             }
+            .alert(isPresented: $showAlert){
+                Alert(title: Text("Falha no cadastro"), message: Text(alertMessage))
+            }
+        }
+    }
+    func signUp(userName: String, email: String, password: String, passwordCheck: String){
+        
+        if(password != passwordCheck){
+            print("As senha não são iguais")
+            alertMessage = "As senha não são iguais"
+            showAlert = true
+            return
+        }
+        if(userName.isEmpty || email.isEmpty || password.isEmpty || passwordCheck.isEmpty){
+            print("Todos os campos devem ser preeenchidos")
+            alertMessage = "Todos os campos devem ser preeenchidos"
+            showAlert = true
+            return
+        }
+        Auth.auth().createUser(withEmail: email, password: password){ authResult, error in
+            
+            guard let user = authResult else {
+                print(error?.localizedDescription ?? "Ocorreu um erro do Firebase")
+                alertMessage = error?.localizedDescription ?? "Ocorreu um erro do Firebase"
+                showAlert = true
+                return
+            }
+
+            print(Auth.auth().currentUser?.email ?? "")
         }
     }
     
-    func signUp(){
-        Auth.auth().createUser(withEmail: "thiago@email.com", password: "123456"){ authResult, error in
-            print(authResult?.description)
-        }
-    }
 }
 
 
