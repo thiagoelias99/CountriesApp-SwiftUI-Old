@@ -16,13 +16,14 @@ struct SignUpView: View {
     @State private var passwordInput = ""
     @State private var passwordConfirmInput = ""
     @State private var showAlert = false
+    @State private var alertMessage = ""
     
     @State private var showLoginScreen = false
     
     private var mainColorDark: UInt32 = 0x463E30
     private var mainColorLight: UInt32 = 0x6B5E4B
     
-    @State private var alertMessage = ""
+
     
     //    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
@@ -53,7 +54,6 @@ struct SignUpView: View {
                                 .font(.body)
                                 .border(Color(hex: mainColorDark))
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .autocapitalization(.none)
                             
                             Text("Seu email")
                                 .foregroundColor(Color(hex: mainColorDark))
@@ -71,22 +71,24 @@ struct SignUpView: View {
                                 .font(.body)
                                 .padding(.top, 4)
                                 .bold()
-                            TextField("", text: $passwordInput)
+                            SecureField ("", text: $passwordInput)
                                 .font(.body)
                                 .border(Color(hex: mainColorDark))
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .autocapitalization(.none)
+                                .textContentType(.password)
                             
                             Text("Repita a senha")
                                 .foregroundColor(Color(hex: mainColorDark))
                                 .font(.body)
                                 .padding(.top, 4)
                                 .bold()
-                            TextField("", text: $passwordConfirmInput)
+                            SecureField ("", text: $passwordConfirmInput)
                                 .font(.body)
                                 .border(Color(hex: mainColorDark))
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .autocapitalization(.none)
+                                .textContentType(.password)
                         }
                         
                         Button(action: {
@@ -179,7 +181,7 @@ struct SignUpView: View {
                 return
             }
 
-            print(Auth.auth().currentUser?.email ?? "")
+            showLoginScreen = true
         }
     }
     

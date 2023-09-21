@@ -11,14 +11,17 @@ import FirebaseAuth
 struct LoginView: View {
     @State private var mostrarSenha = false
     @State private var lembrarSenha = false
-    @State private var emailDigitado = ""
-    @State private var senhaDigitada = ""
+    @State private var emailInput = ""
+    @State private var passwordInput = ""
+    @State private var showAlert = false
+    @State private var alertMessage = ""
     
     @State private var showSignUpScreen = false
+    @State private var showMainScreen = false
     
     private var mainColorDark: UInt32 = 0x463E30
     private var mainColorLight: UInt32 = 0x6B5E4B
-       
+    
     
     var body: some View {
         VStack(alignment: .center){
@@ -40,7 +43,7 @@ struct LoginView: View {
                         .font(.body)
                         .padding(.top, 4)
                         .bold()
-                    TextField("", text: $emailDigitado)
+                    TextField("", text: $emailInput)
                         .font(.body)
                         .border(Color(hex: mainColorDark))
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -61,14 +64,14 @@ struct LoginView: View {
                     ZStack(alignment: .trailing) {
                         Group {
                             if mostrarSenha {
-                                TextField("", text: $senhaDigitada)
+                                TextField("", text: $passwordInput)
                                     .font(.body)
                                     .border(Color(hex: mainColorDark))
                                     .textFieldStyle(RoundedBorderTextFieldStyle())
                                     .autocapitalization(.none)
                                     .textContentType(.password)
                             } else {
-                                SecureField("", text: $senhaDigitada)
+                                SecureField("", text: $passwordInput)
                                     .font(.body)
                                     .border(Color(hex: mainColorDark))
                                     .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -156,27 +159,50 @@ struct LoginView: View {
             }
             .padding(.top, 10)
         }
-
+        
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
             LinearGradient(gradient: Gradient(colors: [Color(hex: mainColorLight), Color(hex: mainColorLight), Color(hex: mainColorDark)]), startPoint: .top, endPoint: .bottom)
         )
-              .edgesIgnoringSafeArea(.all)
-              .fullScreenCover(isPresented: $showSignUpScreen){
-                  SignUpView()
-              }
+        .edgesIgnoringSafeArea(.all)
+        .fullScreenCover(isPresented: $showSignUpScreen){
+            SignUpView()
+        }
+        .fullScreenCover(isPresented: $showMainScreen){
+            ContentView()
+        }
+        .alert(isPresented: $showAlert){
+            Alert(title: Text("Falha no login"), message: Text(alertMessage))
+        }
     }
     
     func login(){
-        Auth.auth().signIn(withEmail: "thiago@email.com", password: "123456"){
-            authResult, error in
-            guard let user = Auth.auth().currentUser else {return}
-            
-            
-            
-            print("Usuário Logado")
-            print(user.email)
+        if(passwordInput.isEmpty || emailInput.isEmpty ){
+            print("Todos os campos devem ser preeenchidos")
+            alertMessage = "Todos os campos devem ser preeenchidos"
+            showAlert = true
+            return
         }
+        
+        do{
+            Auth.auth().signIn(withEmail: emailInput, password: passwordInput){
+                authResult, error in
+                
+                guard let user = authResult else {
+                    print(error?.localizedDescription ?? "Ocorreu um erro do Firebase")
+                    alertMessage = error?.localizedDescription ?? "Ocorreu um erro do Firebase"
+                    showAlert = true
+                    return
+                }
+                
+                print(Auth.auth().currentUser?.email ?? "")
+                showMainScreen = true
+            }
+        } catch{
+            alertMessage = "Email ou senha está errado"
+            showAlert = true
+        }
+        
     }
 }
 
