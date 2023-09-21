@@ -11,6 +11,7 @@
 		C30ADCEB2AB7CD3400975B88 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30ADCEA2AB7CD3400975B88 /* ContentView.swift */; };
 		C30ADCED2AB7CD3400975B88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C30ADCEC2AB7CD3400975B88 /* Assets.xcassets */; };
 		C30ADCF02AB7CD3400975B88 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C30ADCEF2AB7CD3400975B88 /* Preview Assets.xcassets */; };
+		C349A6EF2ABC4BB70089B473 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C349A6EE2ABC4BB70089B473 /* SignUpView.swift */; };
 		C38AACFC2ABA64360083119B /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38AACFB2ABA64360083119B /* LoginView.swift */; };
 		C38AACFF2ABA67D60083119B /* ColorHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = C38AACFE2ABA67D60083119B /* ColorHex.swift */; };
 /* End PBXBuildFile section */
@@ -21,6 +22,7 @@
 		C30ADCEA2AB7CD3400975B88 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C30ADCEC2AB7CD3400975B88 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C30ADCEF2AB7CD3400975B88 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C349A6EE2ABC4BB70089B473 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		C38AACFB2ABA64360083119B /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C38AACFE2ABA67D60083119B /* ColorHex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHex.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -77,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				C38AACFB2ABA64360083119B /* LoginView.swift */,
+				C349A6EE2ABC4BB70089B473 /* SignUpView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -160,6 +163,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C38AACFC2ABA64360083119B /* LoginView.swift in Sources */,
+				C349A6EF2ABC4BB70089B473 /* SignUpView.swift in Sources */,
 				C38AACFF2ABA67D60083119B /* ColorHex.swift in Sources */,
 				C30ADCEB2AB7CD3400975B88 /* ContentView.swift in Sources */,
 				C30ADCE92AB7CD3400975B88 /* CountriesApp_SwiftUIApp.swift in Sources */,

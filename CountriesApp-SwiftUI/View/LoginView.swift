@@ -13,6 +13,8 @@ struct LoginView: View {
     @State private var emailDigitado = ""
     @State private var senhaDigitada = ""
     
+    @State private var showSignUpScreen = false
+    
     private var mainColorDark: UInt32 = 0x463E30
     private var mainColorLight: UInt32 = 0x6B5E4B
     
@@ -36,6 +38,7 @@ struct LoginView: View {
                         .foregroundColor(Color(hex: mainColorDark))
                         .font(.body)
                         .padding(.top, 4)
+                        .bold()
                     TextField("", text: $emailDigitado)
                         .font(.body)
                         .border(Color(hex: mainColorDark))
@@ -45,6 +48,7 @@ struct LoginView: View {
                         Text("Senha")
                             .foregroundColor(Color(hex: mainColorDark))
                             .font(.body)
+                            .bold()
                         Spacer()
                         Text("Recuperar Senha")
                             .foregroundColor(Color(hex: mainColorDark))
@@ -118,13 +122,16 @@ struct LoginView: View {
                     HStack{
                         Text("Não possui uma conta?")
                             .foregroundColor(.gray)
-                        Text("Cadastre")
-                            .foregroundColor(Color(hex: mainColorDark))
-                            .bold()
+                        Button {
+                            showSignUpScreen = true
+                        } label: {
+                            Text("Cadastre")
+                                .foregroundColor(Color(hex: mainColorDark))
+                                .bold()
+                        }
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.top)
-                    
                 }
                 .padding(.horizontal, 20.0)
                 .padding(.vertical, 20.0)
@@ -152,6 +159,9 @@ struct LoginView: View {
             LinearGradient(gradient: Gradient(colors: [Color(hex: mainColorLight), Color(hex: mainColorLight), Color(hex: mainColorDark)]), startPoint: .top, endPoint: .bottom)
         )
               .edgesIgnoringSafeArea(.all)
+              .fullScreenCover(isPresented: $showSignUpScreen){
+                  SignUpView()
+              }
     }
 }
 
