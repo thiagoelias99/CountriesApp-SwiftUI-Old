@@ -19,7 +19,6 @@ struct ContentView: View {
     @State private var countries: [CountryApi] = []
     
     init(){
-       // getUserInfos()
         getCountry()
         searchFirestoreForEmail()
     }
@@ -63,27 +62,6 @@ struct ContentView: View {
                     print("Erro ao obter países :/ : \(error)")
                 }
             }
-    }
-    
-    func getUserInfos(){
-
-        var countries: [Country] = []
-        
-        var country = Country(id: "BRA", name: "Brazil", capital: "Brasília")
-        
-        countries.append(country)
-        
-        var user = User(id: UUID().uuidString, name: "Thiago", email: "thiago@email.com", countries: countries)
-
-        let docRef = db.collection("users").document(user.id)
-        
-        docRef.setData(user.toDictionary()) { err in
-            if let err = err {
-                print("Error setting document: \(err)")
-            } else {
-                print("Document set with ID: \(docRef.documentID)")
-            }
-        }
     }
     
     func searchFirestoreForEmail() {

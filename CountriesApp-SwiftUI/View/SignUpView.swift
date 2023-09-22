@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseAuth
+import FirebaseFirestore
 
 struct SignUpView: View {
     @State private var mostrarSenha = false
@@ -22,6 +23,7 @@ struct SignUpView: View {
     
     private var mainColorDark: UInt32 = 0x463E30
     private var mainColorLight: UInt32 = 0x6B5E4B
+    let db = Firestore.firestore()
     
 
     
@@ -174,14 +176,30 @@ struct SignUpView: View {
         }
         Auth.auth().createUser(withEmail: email, password: password){ authResult, error in
             
-            guard let user = authResult else {
+            guard let _ = authResult else {
                 print(error?.localizedDescription ?? "Ocorreu um erro do Firebase")
                 alertMessage = error?.localizedDescription ?? "Ocorreu um erro do Firebase"
                 showAlert = true
                 return
             }
+            
+            createUser()
 
             showLoginScreen = true
+        }
+    }
+    
+    private func createUser(){
+        var user = User(id: UUID().uuidString, name: nameInput, email: emailInput)
+        
+        let docRef = db.collection("users").document(user.id)
+        
+        docRef.setData(user.toDictionary()) { err in
+            if let err = err {
+                print("Error setting document: \(err)")
+            } else {
+                print("Document set with ID: \(docRef.documentID)")
+            }
         }
     }
     
