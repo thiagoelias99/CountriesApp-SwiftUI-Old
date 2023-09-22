@@ -96,10 +96,15 @@ struct ContentView: View {
                 return
             }
             
-            let userDocument = querySnapshot?.documents[0]
-            let userName = userDocument?.data()["name"] ?? ""
+            guard let userDocument = querySnapshot?.documents[0] else {
+                return
+            }
             
-            print(userName)
+            guard let user = FirestoreUserDAO().documentToUser(document: userDocument) else{
+                return
+            }
+            print(user.name)
+            print(user.countries)
         }
     }
 }

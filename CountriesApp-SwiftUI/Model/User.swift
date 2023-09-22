@@ -11,7 +11,7 @@ struct User: Identifiable, Codable{
     var id: String
     var name: String
     var email: String
-    var countries: [Country]
+    var countries: [Country] = []
     
     func toDictionary() -> [String: Any] {
         return [
