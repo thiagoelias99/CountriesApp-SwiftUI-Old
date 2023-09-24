@@ -23,7 +23,6 @@ struct SignUpView: View {
     
     private var mainColorDark: UInt32 = 0x463E30
     private var mainColorLight: UInt32 = 0x6B5E4B
-    let db = Firestore.firestore()
     
 
     
@@ -183,25 +182,15 @@ struct SignUpView: View {
                 return
             }
             
-            createUser()
+            let userId = UserRepository().createUser(name: nameInput, email: emailInput)
+            
+            print("Created User with id \(userId)")
 
             showLoginScreen = true
         }
     }
     
-    private func createUser(){
-        var user = User(id: UUID().uuidString, name: nameInput, email: emailInput)
-        
-        let docRef = db.collection("users").document(user.id)
-        
-        docRef.setData(user.toDictionary()) { err in
-            if let err = err {
-                print("Error setting document: \(err)")
-            } else {
-                print("Document set with ID: \(docRef.documentID)")
-            }
-        }
-    }
+
     
 }
 

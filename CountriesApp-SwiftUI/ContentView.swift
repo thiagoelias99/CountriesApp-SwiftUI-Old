@@ -11,18 +11,17 @@ import FirebaseFirestore
 import Alamofire
 
 struct ContentView: View {
-    @State private var showLoginScreen = Auth.auth().currentUser?.email == nil
-    
+    @State var showLoginScreen = Auth.auth().currentUser?.email == nil
     let apiUrl = "https://restcountries.com/v3.1/name/br"
+    let userEmail = Auth.auth().currentUser?.email ?? ""
     let db = Firestore.firestore()
-    
+    var user: User? = nil
     @State private var countries: [CountryApi] = []
-    
-    init(){
-        getCountry()
-        searchFirestoreForEmail()
+
+    init() {
+        // Não execute tarefas assíncronas no construtor, mova para onAppear
     }
-    
+
     var body: some View {
         VStack {
             Image(systemName: "globe")
@@ -42,20 +41,34 @@ struct ContentView: View {
             .padding(.trailing, 8)
         }
         .padding()
-        .fullScreenCover(isPresented: $showLoginScreen){
+        .fullScreenCover(isPresented: $showLoginScreen) {
             LoginView()
         }
+        .onAppear {
+            // Execute a lógica assíncrona aqui usando uma função assíncrona
+            async {
+                print(userEmail)
+                var localSelf = self // Cria uma cópia local de self
+                localSelf.user = await UserRepository().getUserByEmail(email: localSelf.userEmail)
+                print(localSelf.user)
+                if localSelf.user == nil {
+                    localSelf.showLoginScreen = true
+                } else {
+                    print("Logged user \(localSelf.user?.name) - \(localSelf.user?.email)")
+                }
+            }
+        }
     }
-    
-    func getCountry(){
+
+    func getCountry() {
         AF.request(apiUrl)
             .validate()
-            .responseDecodable(of: [CountryApi].self){ response in
+            .responseDecodable(of: [CountryApi].self) { [self] response in // Use [self] para capturar self de forma segura
                 switch response.result {
                 case .success(let countries):
                     self.countries = countries
-                    
-                    for country in countries{
+
+                    for country in countries {
                         print(country.name.common)
                     }
                 case .failure(let error):
@@ -63,29 +76,9 @@ struct ContentView: View {
                 }
             }
     }
-    
-    func searchFirestoreForEmail() {
-        let userEmail = Auth.auth().currentUser?.email ?? ""
-        let collectionRef = db.collection("users")
-
-        collectionRef.whereField("email", isEqualTo: userEmail).getDocuments { (querySnapshot, error) in
-            if let error = error {
-                print("Error getting documents: \(error)")
-                return
-            }
-            
-            guard let userDocument = querySnapshot?.documents[0] else {
-                return
-            }
-            
-            guard let user = FirestoreUserDAO().documentToUser(document: userDocument) else{
-                return
-            }
-            print(user.name)
-            print(user.countries)
-        }
-    }
 }
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
