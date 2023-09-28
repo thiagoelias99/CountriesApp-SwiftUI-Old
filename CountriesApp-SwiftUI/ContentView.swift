@@ -42,6 +42,12 @@ struct ContentView: View {
                     .font(.title)
                     .bold()
                 Spacer()
+                Button(action: {
+                    logout()
+                }){
+                    Image(systemName: "return.right")
+                        .foregroundColor(.white)
+                }
             }
                 
             VStack(alignment: .leading){
@@ -67,10 +73,7 @@ struct ContentView: View {
                     }
                     .background(Color(hex: cardBackGround))
                 }
-                
 
-                
-                
                 Spacer()
                 
                 Button(action: {
@@ -158,7 +161,7 @@ struct ContentView: View {
                     .background(Color(hex: cardBackGround))
                     .onTapGesture {
                         user?.countries.append(country.toCountry())
-                        print("Nome do país: \(country.name.common)")
+                        UserRepository().updateUser(user: user!)
                         apresentarFolha = false
                     }
                 }
@@ -183,6 +186,11 @@ struct ContentView: View {
                     print("Erro ao obter países :/ : \(error)")
                 }
             }
+    }
+    
+    func logout(){
+        user = nil
+        showLoginScreen = true
     }
 }
 

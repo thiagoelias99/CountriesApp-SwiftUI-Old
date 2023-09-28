@@ -27,6 +27,7 @@
 		C3A6EA412ABC67DD00E472EC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = C3A6EA402ABC67DD00E472EC /* FirebaseStorage */; };
 		C3A6EA432ABC67DD00E472EC /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = C3A6EA422ABC67DD00E472EC /* FirebaseStorageCombine-Community */; };
 		C3A6EA472ABC686B00E472EC /* FirebaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A6EA462ABC686B00E472EC /* FirebaseConfig.swift */; };
+		C3C707C32AC5AE9E00D97A51 /* CountryListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C707C22AC5AE9E00D97A51 /* CountryListItem.swift */; };
 		C3CACA202ABE08AF00F92F39 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CACA1F2ABE08AF00F92F39 /* UserRepository.swift */; };
 		C3CD9BA42ABDB8D500C15E4F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C3CD9BA32ABDB8D500C15E4F /* Alamofire */; };
 		C3CD9BA72ABDB90A00C15E4F /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CD9BA62ABDB90A00C15E4F /* Country.swift */; };
@@ -46,6 +47,7 @@
 		C38AACFE2ABA67D60083119B /* ColorHex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHex.swift; sourceTree = "<group>"; };
 		C3A6EA2B2ABC66B300E472EC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C3A6EA462ABC686B00E472EC /* FirebaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConfig.swift; sourceTree = "<group>"; };
+		C3C707C22AC5AE9E00D97A51 /* CountryListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListItem.swift; sourceTree = "<group>"; };
 		C3CACA1F2ABE08AF00F92F39 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		C3CD9BA62ABDB90A00C15E4F /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		C3CD9BA92ABDB9CC00C15E4F /* CountryApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryApi.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 		C38AACFA2ABA641A0083119B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C3C707C12AC5AE7C00D97A51 /* Components */,
 				C38AACFB2ABA64360083119B /* LoginView.swift */,
 				C349A6EE2ABC4BB70089B473 /* SignUpView.swift */,
 			);
@@ -150,6 +153,14 @@
 				C3A6EA462ABC686B00E472EC /* FirebaseConfig.swift */,
 			);
 			path = Firebase;
+			sourceTree = "<group>";
+		};
+		C3C707C12AC5AE7C00D97A51 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				C3C707C22AC5AE9E00D97A51 /* CountryListItem.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		C3CACA1E2ABE087500F92F39 /* Repository */ = {
@@ -285,6 +296,7 @@
 				C3CD9BAF2ABDD8D600C15E4F /* FirestoreUserDAO.swift in Sources */,
 				C30ADCEB2AB7CD3400975B88 /* ContentView.swift in Sources */,
 				C30ADCE92AB7CD3400975B88 /* CountriesApp_SwiftUIApp.swift in Sources */,
+				C3C707C32AC5AE9E00D97A51 /* CountryListItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -26,6 +26,16 @@ struct UserRepository{
         return user.id
     }
     
+    func updateUser(user: User){
+        let docRef = db.collection("users").document(user.id)
+        
+        docRef.setData(user.toDictionary()) { err in
+            if let err = err {
+                print("Error setting document: \(err)")
+            }
+        }
+    }
+    
     func getUserByEmail(email: String) async -> User? {
         let collectionRef = db.collection("users")
         
