@@ -15,6 +15,23 @@ struct ContentView: View {
     //@State var showLoginScreen = Auth.auth().currentUser?.email == nil
     
     @State var showLoginScreen = false
+    @State var showDetailsScreen = false
+    @State var selectedCountry: Country = Country(
+        id: "",
+        name: "Brazil",
+        completeName: "Federative Republic of Brazil",
+        capital: "Brasília",
+        flag: "https://flagcdn.com/w320/br.png",
+        cca3: "BRA",
+        region: "South America",
+        area: 8515767.00,
+        population: 212559409.00,
+        coatOfArms: "https://mainfacts.com/media/images/coats_of_arms/br.png",
+        lat: -15.79,
+        long: -47.88
+    )
+    
+    
     let apiUrl = "https://restcountries.com/v3.1/name/"
     let userEmail = Auth.auth().currentUser?.email ?? ""
     let db = Firestore.firestore()
@@ -78,6 +95,14 @@ struct ContentView: View {
                         Spacer()
                     }
                     .background(Color(hex: cardBackGround))
+                    .onTapGesture {
+print(country)
+                        selectedCountry = country
+                        globalSelectedCountry = country
+                        print(selectedCountry)
+                        showDetailsScreen = true
+
+                    }
                     
                 }
                 
@@ -121,6 +146,9 @@ struct ContentView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .fullScreenCover(isPresented: $showLoginScreen) {
             LoginView()
+        }
+        .fullScreenCover(isPresented: $showDetailsScreen){
+                CountryDetailsView(country: selectedCountry)
         }
         .onAppear {
             // Execute a lógica assíncrona aqui usando uma função assíncrona

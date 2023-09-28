@@ -29,6 +29,8 @@
 		C3A6EA412ABC67DD00E472EC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = C3A6EA402ABC67DD00E472EC /* FirebaseStorage */; };
 		C3A6EA432ABC67DD00E472EC /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = C3A6EA422ABC67DD00E472EC /* FirebaseStorageCombine-Community */; };
 		C3A6EA472ABC686B00E472EC /* FirebaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A6EA462ABC686B00E472EC /* FirebaseConfig.swift */; };
+		C3B4FDE72AC61B8400299266 /* CountryDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B4FDE62AC61B8400299266 /* CountryDetailsView.swift */; };
+		C3B4FDE92AC62DAD00299266 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B4FDE82AC62DAD00299266 /* Globals.swift */; };
 		C3CACA202ABE08AF00F92F39 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CACA1F2ABE08AF00F92F39 /* UserRepository.swift */; };
 		C3CD9BA42ABDB8D500C15E4F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C3CD9BA32ABDB8D500C15E4F /* Alamofire */; };
 		C3CD9BA72ABDB90A00C15E4F /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CD9BA62ABDB90A00C15E4F /* Country.swift */; };
@@ -48,6 +50,8 @@
 		C38AACFE2ABA67D60083119B /* ColorHex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHex.swift; sourceTree = "<group>"; };
 		C3A6EA2B2ABC66B300E472EC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C3A6EA462ABC686B00E472EC /* FirebaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConfig.swift; sourceTree = "<group>"; };
+		C3B4FDE62AC61B8400299266 /* CountryDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDetailsView.swift; sourceTree = "<group>"; };
+		C3B4FDE82AC62DAD00299266 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		C3CACA1F2ABE08AF00F92F39 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		C3CD9BA62ABDB90A00C15E4F /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		C3CD9BA92ABDB9CC00C15E4F /* CountryApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryApi.swift; sourceTree = "<group>"; };
@@ -109,6 +113,7 @@
 				C30ADCEC2AB7CD3400975B88 /* Assets.xcassets */,
 				C3A6EA2B2ABC66B300E472EC /* GoogleService-Info.plist */,
 				C30ADCEE2AB7CD3400975B88 /* Preview Content */,
+				C3B4FDE82AC62DAD00299266 /* Globals.swift */,
 			);
 			path = "CountriesApp-SwiftUI";
 			sourceTree = "<group>";
@@ -127,6 +132,7 @@
 				C3C707C12AC5AE7C00D97A51 /* Components */,
 				C38AACFB2ABA64360083119B /* LoginView.swift */,
 				C349A6EE2ABC4BB70089B473 /* SignUpView.swift */,
+				C3B4FDE62AC61B8400299266 /* CountryDetailsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -289,11 +295,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3B4FDE72AC61B8400299266 /* CountryDetailsView.swift in Sources */,
 				C3CACA202ABE08AF00F92F39 /* UserRepository.swift in Sources */,
 				C3CD9BA72ABDB90A00C15E4F /* Country.swift in Sources */,
 				C3CD9BAA2ABDB9CD00C15E4F /* CountryApi.swift in Sources */,
 				C3A6EA472ABC686B00E472EC /* FirebaseConfig.swift in Sources */,
 				C38AACFC2ABA64360083119B /* LoginView.swift in Sources */,
+				C3B4FDE92AC62DAD00299266 /* Globals.swift in Sources */,
 				C349A6EF2ABC4BB70089B473 /* SignUpView.swift in Sources */,
 				C3CD9BAC2ABDC4FB00C15E4F /* User.swift in Sources */,
 				C38AACFF2ABA67D60083119B /* ColorHex.swift in Sources */,
