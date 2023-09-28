@@ -11,12 +11,14 @@ struct Country: Codable, Identifiable{
     var id: String
     var name: String
     var capital: String
+    var flag: String?
     
     func toDictionary() -> [String: Any] {
         return [
             "id": id,
             "name": name,
-            "capital": capital
+            "capital": capital,
+            "flag": flag ?? ""
         ]
     }
 }

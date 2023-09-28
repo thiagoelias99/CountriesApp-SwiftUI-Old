@@ -9,6 +9,7 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
 import Alamofire
+import URLImage
 
 struct ContentView: View {
     //@State var showLoginScreen = Auth.auth().currentUser?.email == nil
@@ -27,13 +28,13 @@ struct ContentView: View {
     @State private var countrySearch: [CountryApi] = []
     
     @State private var countryInput = ""
-       
+    
     @State private var apresentarFolha = false
-
+    
     init() {
-
+        
     }
-
+    
     var body: some View {
         VStack(alignment: .center) {
             HStack{
@@ -49,7 +50,7 @@ struct ContentView: View {
                         .foregroundColor(.white)
                 }
             }
-                
+            
             VStack(alignment: .leading){
                 Text("Minha lista de países")
                     .foregroundColor(.white)
@@ -59,11 +60,16 @@ struct ContentView: View {
                 
                 ForEach(user?.countries ?? []) { country in
                     HStack{
-                        Image(systemName: "flag.square")
-                            .resizable()
-                            .foregroundColor(Color(hex: cardForeGround))
-                            .frame(width: 75, height: 55)
-                            .padding(10)
+                        if let url = URL(string: country.flag ?? ""){
+                            URLImage(url){ image in
+                                image
+                                    .resizable()
+                                    .foregroundColor(Color(hex: cardForeGround))
+                                    .frame(width: 75, height: 55)
+                                    .padding(10)
+                            }
+                        }
+                        
                         Text(country.name)
                             .foregroundColor(Color(hex: cardForeGround))
                             .font(.body)
@@ -72,8 +78,9 @@ struct ContentView: View {
                         Spacer()
                     }
                     .background(Color(hex: cardBackGround))
+                    
                 }
-
+                
                 Spacer()
                 
                 Button(action: {
@@ -123,7 +130,7 @@ struct ContentView: View {
                 localSelf.user = await UserRepository().getUserByEmail(email: localSelf.userEmail)
                 print(localSelf.user)
                 if localSelf.user == nil {
-                   // localSelf.showLoginScreen = true
+                    // localSelf.showLoginScreen = true
                 } else {
                     print("Logged user \(localSelf.user?.name) - \(localSelf.user?.email)")
                 }
@@ -144,18 +151,23 @@ struct ContentView: View {
                     .onChange(of: countryInput){ newText in
                         getCountry(text: newText)
                     }
-                ForEach(countrySearch ?? [], id: \.self) { country in
-                    HStack{
-                        Image(systemName: "flag.square")
-                            .resizable()
-                            .foregroundColor(Color(hex: cardForeGround))
-                            .frame(width: 75, height: 55)
-                            .padding(10)
+                ForEach(countrySearch ?? [], id: \.self) { (country: CountryApi) in
+                    HStack {
+                        if let url = URL(string: country.flags.png ?? ""){
+                            URLImage(url){ image in
+                                image
+                                    .resizable()
+                                    .foregroundColor(Color(hex: cardForeGround))
+                                    .frame(width: 75, height: 55)
+                                    .padding(10)
+                            }
+                        }
                         Text(String(describing: country.name.common))
                             .foregroundColor(Color(hex: cardForeGround))
                             .font(.body)
                             .padding(.top, 4)
                             .bold()
+                        
                         Spacer()
                     }
                     .background(Color(hex: cardBackGround))
@@ -166,13 +178,14 @@ struct ContentView: View {
                     }
                 }
                 .padding(10)
+
                 Spacer()
             }
             .padding(10)
             .background(Color(hex: 0x443e32))
         }
     }
-
+    
     func getCountry(text: String) {
         AF.request(apiUrl + text)
             .validate()

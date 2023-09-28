@@ -9,6 +9,7 @@ import Foundation
 
 struct CountryApi: Codable, Hashable {
     var name: CountryNameApi
+    var flags: Flags
     
     // Implemente o protocolo Hashable manualmente
     func hash(into hasher: inout Hasher) {
@@ -16,11 +17,15 @@ struct CountryApi: Codable, Hashable {
     }
     
     func toCountry() -> Country{
-        return Country(id: UUID().uuidString, name: name.common, capital: name.common)
+        return Country(id: UUID().uuidString, name: name.common, capital: name.common, flag: flags.png)
     }
 }
 
 struct CountryNameApi: Codable, Hashable {
     var common: String
+}
+
+struct Flags: Codable, Hashable{
+    var png: String
 }
 
