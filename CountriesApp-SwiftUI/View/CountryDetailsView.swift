@@ -16,63 +16,33 @@ struct CountryDetailsView: View {
 
     var body: some View {
         if let country2 = globalSelectedCountry{
-            VStack(alignment: .leading){
-                
-                HStack{
-                    Spacer()
-                    if let url = URL(string: country2.flag ?? ""){
-                        URLImage(url){ image in
-                            image
-                                .resizable()
-                                .frame(width: .infinity, height: 200)
+
+            TabView{
+                CountryInfosView(country: country2)
+                    .tabItem(){
+                        Group{
+                            Image(systemName: "info.circle")
+                                .foregroundColor(.white)
+                            Text("Infos")
+                                .foregroundColor(.white)
                         }
-                        Spacer()
                     }
-                }
-                Group{
-                    Text(country2.name ?? "")
-                        .font(.title)
-                        .bold()
-                        .padding(.top, 10)
-                    Text(country2.completeName ?? "")
-                        .font(.subheadline)
-                        .bold()
-                }
-                .foregroundColor(Color(hex: textColor))
-                Group{
-                    Text("Capital")
-                        .font(.title2)
-                        .bold()
-                        .padding(.top, 10)
-                    Text(country2.capital ?? "")
-                        .font(.body)
-                }
-                .foregroundColor(Color(hex: textColor))
-                Group{
-                    Text("Region")
-                        .font(.title2)
-                        .bold()
-                        .padding(.top, 10)
-                    Text(country2.region ?? "")
-                        .font(.body)
-                }
-                .foregroundColor(Color(hex: textColor))
-                HStack{
-                    if let url = URL(string: country2.coatOfArms ?? ""){
-                        Spacer()
-                        URLImage(url){ image in
-                            image
-                                .resizable()
-                                .frame(width: 200, height: 200)
+                CountryMapView(latitude: country2.lat, longitude: country2.long)
+                    .tabItem(){
+                        Group{
+                            Image(systemName: "map.circle.fill")
+                                .foregroundColor(.white)
+                            Text("Location")
+                                .foregroundColor(.white)
                         }
-                        Spacer()
                     }
-                }
-                .padding(.top, 30)
-                Spacer()
             }
-            .padding(.all)
-            .background(Color(hex: 0x443e32))
+            .onAppear(){
+                UITabBar.appearance().backgroundColor = .black
+            }
+            .tint(.white)
+
+            
         }
     }
 }
