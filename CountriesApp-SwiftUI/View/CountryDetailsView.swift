@@ -13,34 +13,49 @@ struct CountryDetailsView: View {
     let country: Country
     
     var textColor: UInt32 = 0xDBC59E
+    
+    @State var showMainScreen = false
 
     var body: some View {
-        if let country2 = globalSelectedCountry{
-
-            TabView{
-                CountryInfosView(country: country2)
-                    .tabItem(){
-                        Group{
-                            Image(systemName: "info.circle")
-                                .foregroundColor(.white)
-                            Text("Infos")
-                                .foregroundColor(.white)
-                        }
+        VStack{
+            HStack{
+                Text("Voltar")
+                    .onTapGesture {
+                        showMainScreen = true
                     }
-                CountryMapView(latitude: country2.lat, longitude: country2.long)
-                    .tabItem(){
-                        Group{
-                            Image(systemName: "map.circle.fill")
-                                .foregroundColor(.white)
-                            Text("Localização")
-                                .foregroundColor(.white)
+                Spacer()
+            }
+            .padding(10)
+            
+            if let country2 = globalSelectedCountry{
+                TabView{
+                    CountryInfosView(country: country2)
+                        .tabItem(){
+                            Group{
+                                Image(systemName: "info.circle")
+                                    .foregroundColor(.white)
+                                Text("Infos")
+                                    .foregroundColor(.white)
+                            }
                         }
-                    }
+                    CountryMapView(latitude: country2.lat, longitude: country2.long)
+                        .tabItem(){
+                            Group{
+                                Image(systemName: "map.circle.fill")
+                                    .foregroundColor(.white)
+                                Text("Localização")
+                                    .foregroundColor(.white)
+                            }
+                        }
+                }
+                .onAppear(){
+                    UITabBar.appearance().backgroundColor = .black
+                }
+                .tint(.white)
             }
-            .onAppear(){
-                UITabBar.appearance().backgroundColor = .black
-            }
-            .tint(.white)            
+        }
+        .fullScreenCover(isPresented: $showMainScreen){
+            ContentView()
         }
     }
 }
