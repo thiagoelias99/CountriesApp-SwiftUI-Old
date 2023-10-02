@@ -10,12 +10,11 @@ import FirebaseAuth
 import FirebaseFirestore
 
 struct SignUpView: View {
-    @State private var mostrarSenha = false
-    @State private var lembrarSenha = false
     @State private var nameInput = ""
     @State private var emailInput = ""
     @State private var passwordInput = ""
     @State private var passwordConfirmInput = ""
+    
     @State private var showAlert = false
     @State private var alertMessage = ""
     
@@ -23,10 +22,6 @@ struct SignUpView: View {
     
     private var mainColorDark: UInt32 = 0x463E30
     private var mainColorLight: UInt32 = 0x6B5E4B
-    
-
-    
-    //    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some View {
         GeometryReader{ geometry in
@@ -159,6 +154,9 @@ struct SignUpView: View {
             }
         }
     }
+    
+    //Registra/ valida usuário com firebase auth
+    //Cria usuário no firestore
     func signUp(userName: String, email: String, password: String, passwordCheck: String){
         
         if(password != passwordCheck){
@@ -185,19 +183,11 @@ struct SignUpView: View {
             let userId = UserRepository().createUser(name: nameInput, email: emailInput)
             
             print("Created User with id \(userId)")
-
+            
             showLoginScreen = true
         }
     }
-    
-
-    
 }
-
-
-
-
-
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {

@@ -32,7 +32,7 @@ struct CountryDetailsView: View {
                         Group{
                             Image(systemName: "map.circle.fill")
                                 .foregroundColor(.white)
-                            Text("Location")
+                            Text("Localização")
                                 .foregroundColor(.white)
                         }
                     }
@@ -40,9 +40,7 @@ struct CountryDetailsView: View {
             .onAppear(){
                 UITabBar.appearance().backgroundColor = .black
             }
-            .tint(.white)
-
-            
+            .tint(.white)            
         }
     }
 }

@@ -9,10 +9,11 @@ import SwiftUI
 import FirebaseAuth
 
 struct LoginView: View {
-    @State private var mostrarSenha = false
-    @State private var lembrarSenha = false
+    @State private var showPassword = false
+    @State private var rememberUser = false
     @State private var emailInput = ""
     @State private var passwordInput = ""
+    
     @State private var showAlert = false
     @State private var alertMessage = ""
     
@@ -20,8 +21,7 @@ struct LoginView: View {
     @State private var showMainScreen = false
     
     private var mainColorDark: UInt32 = 0x463E30
-    private var mainColorLight: UInt32 = 0x6B5E4B
-    
+    private var mainColorLight: UInt32 = 0x6B5E4B    
     
     var body: some View {
         VStack(alignment: .center){
@@ -63,7 +63,7 @@ struct LoginView: View {
                     .padding(.top, 4)
                     ZStack(alignment: .trailing) {
                         Group {
-                            if mostrarSenha {
+                            if showPassword {
                                 TextField("", text: $passwordInput)
                                     .font(.body)
                                     .border(Color(hex: mainColorDark))
@@ -81,9 +81,9 @@ struct LoginView: View {
                         }
                         
                         Button(action: {
-                            mostrarSenha.toggle()
+                            showPassword.toggle()
                         }) {
-                            Image(systemName: self.mostrarSenha ? "eye.slash" : "eye")
+                            Image(systemName: self.showPassword ? "eye.slash" : "eye")
                                 .accentColor(.gray)
                         }
                         .padding(.trailing, 8)
@@ -93,7 +93,7 @@ struct LoginView: View {
                         Spacer()
                         Text("Lembrar me")
                             .font(.caption)
-                        Toggle("", isOn: $lembrarSenha)
+                        Toggle("", isOn: $rememberUser)
                             .tint(Color(hex: mainColorDark))
                             .frame(width: 50)
                     }
@@ -176,6 +176,7 @@ struct LoginView: View {
         }
     }
     
+    //Login/ validação com firebase auth
     func login(){
         if(passwordInput.isEmpty || emailInput.isEmpty ){
             print("Todos os campos devem ser preeenchidos")
@@ -184,25 +185,19 @@ struct LoginView: View {
             return
         }
         
-        do{
-            Auth.auth().signIn(withEmail: emailInput, password: passwordInput){
-                authResult, error in
-                
-                guard let user = authResult else {
-                    print(error?.localizedDescription ?? "Ocorreu um erro do Firebase")
-                    alertMessage = error?.localizedDescription ?? "Ocorreu um erro do Firebase"
-                    showAlert = true
-                    return
-                }
-                
-                print(Auth.auth().currentUser?.email ?? "")
-                showMainScreen = true
+        Auth.auth().signIn(withEmail: emailInput, password: passwordInput){
+            authResult, error in
+            
+            guard let user = authResult else {
+                print(error?.localizedDescription ?? "Ocorreu um erro do Firebase")
+                alertMessage = error?.localizedDescription ?? "Ocorreu um erro do Firebase"
+                showAlert = true
+                return
             }
-        } catch{
-            alertMessage = "Email ou senha está errado"
-            showAlert = true
+            
+            print(Auth.auth().currentUser?.email ?? "")
+            showMainScreen = true
         }
-        
     }
 }
 

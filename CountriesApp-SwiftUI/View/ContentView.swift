@@ -12,10 +12,11 @@ import Alamofire
 import URLImage
 
 struct ContentView: View {
-    //@State var showLoginScreen = Auth.auth().currentUser?.email == nil
-    
     @State var showLoginScreen = false
     @State var showDetailsScreen = false
+    
+    @State private var user: User? = nil
+    @State private var countries: [CountryApi] = []
     @State var selectedCountry: Country = Country(
         id: "",
         name: "Brazil",
@@ -31,22 +32,18 @@ struct ContentView: View {
         long: -47.88
     )
     
-    
     let apiUrl = "https://restcountries.com/v3.1/name/"
     let userEmail = Auth.auth().currentUser?.email ?? ""
     let db = Firestore.firestore()
-    @State private var user: User? = nil
-    @State private var countries: [CountryApi] = []
+    
     
     private var buttonColor: UInt32 = 0xdbc59e
     private var cardBackGround: UInt32 = 0xffffff
     private var cardForeGround: UInt32 = 0x463e30
     
     @State private var countrySearch: [CountryApi] = []
-    
     @State private var countryInput = ""
-    
-    @State private var apresentarFolha = false
+    @State private var showSheet = false
     
     init() {
         
@@ -77,7 +74,7 @@ struct ContentView: View {
                 
                 ForEach(user?.countries ?? []) { country in
                     HStack{
-                        if let url = URL(string: country.flag ?? ""){
+                        if let url = URL(string: country.flag){
                             URLImage(url){ image in
                                 image
                                     .resizable()
@@ -96,25 +93,22 @@ struct ContentView: View {
                     }
                     .background(Color(hex: cardBackGround))
                     .onTapGesture {
-print(country)
+                        print(country)
                         selectedCountry = country
                         globalSelectedCountry = country
                         print(selectedCountry)
                         showDetailsScreen = true
-
                     }
-                    
                 }
                 
                 Spacer()
                 
                 Button(action: {
-                    apresentarFolha = true
+                    showSheet = true
                 }){
                     Text("Adicionar País")
                         .font(.body)
                         .foregroundColor(.black)
-                    
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: 40)
@@ -148,24 +142,18 @@ print(country)
             LoginView()
         }
         .fullScreenCover(isPresented: $showDetailsScreen){
-                CountryDetailsView(country: selectedCountry)
+            CountryDetailsView(country: selectedCountry)
         }
         .onAppear {
-            // Execute a lógica assíncrona aqui usando uma função assíncrona
+            //Busca informaçãou do usuário no firestore
             async {
-                print(userEmail)
-                var localSelf = self // Cria uma cópia local de self
+                let localSelf = self
                 localSelf.user = await UserRepository().getUserByEmail(email: localSelf.userEmail)
-                print(localSelf.user)
-                if localSelf.user == nil {
-                    // localSelf.showLoginScreen = true
-                } else {
-                    print("Logged user \(localSelf.user?.name) - \(localSelf.user?.email)")
-                }
             }
         }
         .background(Color(hex: 0x443e32))
-        .sheet(isPresented: $apresentarFolha) {
+        .sheet(isPresented: $showSheet) {
+            //Tela de busca de países
             VStack{
                 Text("Digite o nome do país")
                     .foregroundColor(.white)
@@ -202,11 +190,13 @@ print(country)
                     .onTapGesture {
                         user?.countries.append(country.toCountry())
                         UserRepository().updateUser(user: user!)
-                        apresentarFolha = false
+                        countrySearch = []
+                        countryInput = ""
+                        showSheet = false
                     }
                 }
                 .padding(10)
-
+                
                 Spacer()
             }
             .padding(10)
@@ -214,10 +204,11 @@ print(country)
         }
     }
     
+    //Busca países na api
     func getCountry(text: String) {
         AF.request(apiUrl + text)
             .validate()
-            .responseDecodable(of: [CountryApi].self) { [self] response in // Use [self] para capturar self de forma segura
+            .responseDecodable(of: [CountryApi].self) { [self] response in
                 switch response.result {
                 case .success(let countries):
                     self.countries = countries

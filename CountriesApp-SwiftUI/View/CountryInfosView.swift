@@ -12,13 +12,12 @@ struct CountryInfosView: View {
     var country: Country
     var textColor: UInt32 = 0xDBC59E
     
-    
     var body: some View {
         VStack(alignment: .leading){
             
             HStack{
                 Spacer()
-                if let url = URL(string: country.flag ?? ""){
+                if let url = URL(string: country.flag ){
                     URLImage(url){ image in
                         image
                             .resizable()
@@ -28,11 +27,11 @@ struct CountryInfosView: View {
                 }
             }
             Group{
-                Text(country.name ?? "")
+                Text(country.name)
                     .font(.title)
                     .bold()
                     .padding(.top, 10)
-                Text(country.completeName ?? "")
+                Text(country.completeName)
                     .font(.subheadline)
                     .bold()
             }
@@ -42,21 +41,21 @@ struct CountryInfosView: View {
                     .font(.title2)
                     .bold()
                     .padding(.top, 10)
-                Text(country.capital ?? "")
+                Text(country.capital)
                     .font(.body)
             }
             .foregroundColor(Color(hex: textColor))
             Group{
-                Text("Region")
+                Text("Região")
                     .font(.title2)
                     .bold()
                     .padding(.top, 10)
-                Text(country.region ?? "")
+                Text(country.region)
                     .font(.body)
             }
             .foregroundColor(Color(hex: textColor))
             HStack{
-                if let url = URL(string: country.coatOfArms ?? ""){
+                if let url = URL(string: country.coatOfArms){
                     Spacer()
                     URLImage(url){ image in
                         image

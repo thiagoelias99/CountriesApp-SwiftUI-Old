@@ -113,7 +113,6 @@
 				C38AACFD2ABA67BE0083119B /* Extension */,
 				C38AACFA2ABA641A0083119B /* View */,
 				C30ADCE82AB7CD3400975B88 /* CountriesApp_SwiftUIApp.swift */,
-				C30ADCEA2AB7CD3400975B88 /* ContentView.swift */,
 				C30ADCEC2AB7CD3400975B88 /* Assets.xcassets */,
 				C3A6EA2B2ABC66B300E472EC /* GoogleService-Info.plist */,
 				C30ADCEE2AB7CD3400975B88 /* Preview Content */,
@@ -137,7 +136,9 @@
 				C38AACFB2ABA64360083119B /* LoginView.swift */,
 				C349A6EE2ABC4BB70089B473 /* SignUpView.swift */,
 				C3B4FDE62AC61B8400299266 /* CountryDetailsView.swift */,
+				C3AD15712AC646E70044C123 /* CountryInfosView.swift */,
 				C3AD15732AC64BF90044C123 /* CountryMapView.swift */,
+				C30ADCEA2AB7CD3400975B88 /* ContentView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -171,7 +172,6 @@
 		C3C707C12AC5AE7C00D97A51 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				C3AD15712AC646E70044C123 /* CountryInfosView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
